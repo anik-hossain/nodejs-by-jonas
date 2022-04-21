@@ -1,0 +1,30 @@
+{
+    "name": "node-farm",
+    "version": "1.0.0",
+    "description": "node farm is a node js application",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/anik-hossain/nodejs-by-jonas.git"
+    },
+    "keywords": [
+        "js",
+        "node.js",
+        "web-application"
+    ],
+    "author": "Anik Hossain",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/anik-hossain/nodejs-by-jonas/issues"
+    },
+    "homepage": "https://github.com/anik-hossain/nodejs-by-jonas#readme",
+    "dependencies": {
+        "slugify": "^1.6.5"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    }
+}
