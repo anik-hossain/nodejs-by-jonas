@@ -1,0 +1,29 @@
+{
+    "name": "natours",
+    "version": "1.0.0",
+    "description": "Natours is a node.js application",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/anik-hossain/nodejs-by-jonas.git"
+    },
+    "keywords": [
+        "JS",
+        "Node.js",
+        "web-app"
+    ],
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/anik-hossain/nodejs-by-jonas/issues"
+    },
+    "homepage": "https://github.com/anik-hossain/nodejs-by-jonas#readme",
+    "dependencies": {
+        "express": "^4.17.3"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    }
+}
