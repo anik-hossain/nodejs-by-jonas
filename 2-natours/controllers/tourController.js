@@ -67,7 +67,7 @@ exports.createTour = (req, res) => {
     });
 };
 
-//Update tour
+// Update tour
 exports.updateTour = (req, res) => {
     res.status(200).json({
         status: 'Success',
@@ -75,7 +75,7 @@ exports.updateTour = (req, res) => {
     });
 };
 
-//Delete tour
+// Delete tour
 exports.deleteTour = (req, res) => {
     res.status(204).json({
         status: 'Success',
