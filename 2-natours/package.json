@@ -4,7 +4,7 @@
     "description": "Natours is a node.js application",
     "main": "app.js",
     "scripts": {
-        "start": "nodemon node app.js"
+        "start": "nodemon node server.js"
     },
     "repository": {
         "type": "git",
@@ -21,7 +21,8 @@
     },
     "homepage": "https://github.com/anik-hossain/nodejs-by-jonas#readme",
     "dependencies": {
-        "express": "^4.17.3"
+        "express": "^4.17.3",
+        "morgan": "^1.10.0"
     },
     "devDependencies": {
         "nodemon": "^2.0.15"
