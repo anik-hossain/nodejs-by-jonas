@@ -20,4 +20,12 @@ app.use(express.static(`${__dirname}/public`));
 app.use('/api/v1/tours/', tourRoutes);
 app.use('/api/v1/users/', userRoutes);
 
+// 404 Route
+app.all('*', (req, res, next) => {
+    res.status(404).json({
+        status: '404 not found',
+        message: `Can't find ${req.originalUrl} on this server`,
+    });
+});
+
 module.exports = app;
