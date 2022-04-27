@@ -5,9 +5,12 @@ const {
     getAllTours,
     getTour,
     updateTour,
+    getTourStats,
 } = require('../controllers/tourController');
 
 const router = express.Router();
+
+router.route('/tour-stats').get(getTourStats);
 
 router.route('/').get(getAllTours).post(createTour);
 
