@@ -14,7 +14,7 @@ exports.getUser = (req, res) => {
 
 // Create new user
 exports.createUser = (req, res) => {
-    res.status(404).json({
+    res.status(201).json({
         status: 'Error',
     });
 };
