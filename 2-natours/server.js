@@ -14,12 +14,19 @@ mongoose
         useFindAndModify: false,
         useUnifiedTopology: true,
     })
-    .then(() => console.log('Database connected successfully'))
-    .catch(() => console.log('Database not connected'));
+    .then(() => console.log('Database connected successfully'));
 
 const app = require('./app');
 
 const port = process.env.PORT || 8000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`App is running on port ${port}`);
+});
+
+process.on('unhandledRejection', (err) => {
+    console.log(err.name, err.message);
+    console.log('UNHANDLED REJECTION 🔥 Shutting down...');
+    server.close(() => {
+        process.exit(1);
+    });
 });
