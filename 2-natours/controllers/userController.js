@@ -76,3 +76,12 @@ exports.update_profile = catchAsync(async (req, res, next) => {
         data: updatedUser,
     });
 });
+
+exports.delete_profile = catchAsync(async (req, res, next) => {
+    await User.findByIdAndUpdate(req.user.id, { active: false });
+
+    res.status(204).json({
+        status: 'Deleted',
+        data: null,
+    });
+});
