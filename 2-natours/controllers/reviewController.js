@@ -1,5 +1,6 @@
 const Review = require('../models/reviewModel');
 const catchAsync = require('../utils/catchAsync');
+const { deleteOne } = require('./handlerFactory');
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
     // Adding a nested GET endpoint
@@ -30,3 +31,5 @@ exports.createReview = catchAsync(async (req, res, next) => {
         },
     });
 });
+
+exports.deleteReview = deleteOne(Review);

@@ -1,6 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
+const { deleteOne } = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedField) => {
     const newObj = {};
@@ -42,11 +43,7 @@ exports.updateUser = (req, res) => {
 };
 
 // Delete user
-exports.deleteUser = (req, res) => {
-    res.status(404).json({
-        status: 'Error',
-    });
-};
+exports.deleteUser = deleteOne(User);
 
 exports.update_profile = catchAsync(async (req, res, next) => {
     // 1. Create error if user post password data
