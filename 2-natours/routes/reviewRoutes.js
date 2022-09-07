@@ -1,12 +1,13 @@
 const express = require('express');
-const { protect, restrictTo } = require('../controllers/authController');
 
+const { protect, restrictTo } = require('../controllers/authController');
 const {
     getAllReviews,
     createReview,
 } = require('../controllers/reviewController');
 
-const router = express.Router();
+// MergeParams enable for nested routes
+const router = express.Router({ mergeParams: true });
 
 router
     .route('/')
