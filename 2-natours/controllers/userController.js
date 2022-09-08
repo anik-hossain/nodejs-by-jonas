@@ -1,7 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
-const { deleteOne, updateOne } = require('./handlerFactory');
+const { deleteOne, updateOne, getOne, getAll } = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedField) => {
     const newObj = {};
@@ -12,26 +12,14 @@ const filterObj = (obj, ...allowedField) => {
 };
 
 // Get all users
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-    const users = await User.find();
-    res.status(200).json({
-        status: 'Ok',
-        results: users.length,
-        data: { users },
-    });
-});
+exports.getAllUsers = getAll(User);
 
 // Get user by id
-exports.getUser = (req, res) => {
-    res.status(404).json({
-        status: 'Error',
-    });
-};
-
+exports.getUser = getOne(User);
 // Create new user
 exports.createUser = (req, res) => {
-    res.status(201).json({
-        status: 'Error',
+    res.status(403).json({
+        status: 'This route not defined yet! Please use /signup',
     });
 };
 

@@ -7,6 +7,7 @@ const {
     deleteReview,
     updateReview,
     setTourUserIds,
+    getReview,
 } = require('../controllers/reviewController');
 
 // MergeParams enable for nested routes
@@ -17,6 +18,10 @@ router
     .get(getAllReviews)
     .post(protect, restrictTo('user'), setTourUserIds, createReview);
 
-router.route('/:id').patch(protect, updateReview).delete(protect, deleteReview);
+router
+    .route('/:id')
+    .get(getReview)
+    .patch(protect, updateReview)
+    .delete(protect, deleteReview);
 
 module.exports = router;
