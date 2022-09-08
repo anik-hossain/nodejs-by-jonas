@@ -49,6 +49,7 @@ exports.getAll = (Model) =>
             .limitFields()
             .pagination();
 
+        // const doc = await features.query.explain();
         const doc = await features.query;
 
         // Response to client
