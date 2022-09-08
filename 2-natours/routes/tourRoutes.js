@@ -18,7 +18,9 @@ const router = express.Router();
 router.use('/:tourId/reviews', reviewRouter);
 
 router.route('/tour-stats').get(getTourStats);
-router.route('/monthly-plan/:year').get(getMonthlyPlan);
+router
+    .route('/monthly-plan/:year')
+    .get(protect, restrictTo('admin', 'lead-guide', 'guide'), getMonthlyPlan);
 
 router
     .route('/')
@@ -28,7 +30,7 @@ router
 router
     .route('/:id')
     .get(getTour)
-    .patch(updateTour)
+    .patch(protect, restrictTo('admin', 'lead-guide'), updateTour)
     .delete(protect, restrictTo('admin', 'lead-guide'), deleteTour);
 
 module.exports = router;

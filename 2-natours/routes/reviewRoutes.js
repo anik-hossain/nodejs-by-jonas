@@ -13,15 +13,18 @@ const {
 // MergeParams enable for nested routes
 const router = express.Router({ mergeParams: true });
 
+// Protect all routes after this middleware
+router.use(protect);
+
 router
     .route('/')
     .get(getAllReviews)
-    .post(protect, restrictTo('user'), setTourUserIds, createReview);
+    .post(restrictTo('user'), setTourUserIds, createReview);
 
 router
     .route('/:id')
     .get(getReview)
-    .patch(protect, updateReview)
-    .delete(protect, deleteReview);
+    .patch(restrictTo('user', 'admin'), updateReview)
+    .delete(restrictTo('user', 'admin'), deleteReview);
 
 module.exports = router;
