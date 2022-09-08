@@ -11,6 +11,11 @@ const filterObj = (obj, ...allowedField) => {
     return newObj;
 };
 
+exports.getMe = (req, res, next) => {
+    req.params.id = req.user.id;
+    next();
+};
+
 // Get all users
 exports.getAllUsers = getAll(User);
 
