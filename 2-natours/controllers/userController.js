@@ -1,7 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const User = require('../models/userModel');
 const AppError = require('../utils/AppError');
-const { deleteOne } = require('./handlerFactory');
+const { deleteOne, updateOne } = require('./handlerFactory');
 
 const filterObj = (obj, ...allowedField) => {
     const newObj = {};
@@ -36,11 +36,7 @@ exports.createUser = (req, res) => {
 };
 
 // Update user
-exports.updateUser = (req, res) => {
-    res.status(404).json({
-        status: 'Error',
-    });
-};
+exports.updateUser = updateOne(User);
 
 // Delete user
 exports.deleteUser = deleteOne(User);
