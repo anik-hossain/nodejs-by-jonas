@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xssClean = require('xss-clean');
 const hpp = require('hpp');
+const path = require('path');
 
 const errorController = require('./controllers/errorController');
 const AppError = require('./utils/AppError');
@@ -21,7 +22,14 @@ const reviewRouter = require('./routes/reviewRoutes');
  */
 const app = express();
 
+// Template Engine
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
 // Global Middleware
+
+// Serving static file
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Security Http Headers
 app.use(helmet());
@@ -61,10 +69,11 @@ app.use(
     })
 );
 
-// Serving static file
-app.use(express.static(`${__dirname}/public`));
-
 // Routing
+app.get('/', (req, res) => {
+    res.status(200).render('index');
+});
+
 app.use('/api/v1/tours/', tourRouter);
 app.use('/api/v1/users/', userRouter);
 app.use('/api/v1/reviews/', reviewRouter);
