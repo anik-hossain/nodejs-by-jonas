@@ -71,7 +71,7 @@ app.use(
 
 // Routing
 app.get('/', (req, res) => {
-    res.status(200).render('index');
+    res.status(200).render('base');
 });
 
 app.use('/api/v1/tours/', tourRouter);
