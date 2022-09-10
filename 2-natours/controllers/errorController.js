@@ -26,32 +26,53 @@ const handleJwtExpireError = () =>
         'Unauthorized'
     );
 
-const sendErrorDev = (err, res) => {
-    res.status(err.statusCode).json({
-        status: err.status,
-        message: err.message,
-        error: err,
-        stack: err.stack,
+const sendErrorDev = (err, req, res) => {
+    if (req.originalUrl.startsWith('/api')) {
+        return res.status(err.statusCode).json({
+            status: err.status,
+            message: err.message,
+            error: err,
+            stack: err.stack,
+        });
+    }
+    return res.status(err.statusCode).render('error', {
+        title: 'Something went wrong!',
+        msg: err.message,
     });
 };
 
-const sendErrorProduction = (err, res) => {
-    // Operational, trusted error: send to client
-    if (err.isOperational) {
-        res.status(err.statusCode).json({
-            status: err.status,
-            message: err.message,
-        });
-    }
-    // Programming or other unknown error: don't leak error details in client
-    else {
+const sendErrorProduction = (err, req, res) => {
+    if (req.originalUrl.startsWith('/api')) {
+        // Operational, trusted error: send to client
+        if (err.isOperational) {
+            return res.status(err.statusCode).json({
+                status: err.status,
+                message: err.message,
+            });
+        }
+        // Programming or other unknown error: don't leak error details in client
+
         console.error('Error 😡', err);
 
-        res.status(500).json({
+        return res.status(500).json({
             status: 'Server side error',
             message: 'Something went wrong in server',
         });
     }
+    // Operational, trusted error: send to client
+    if (err.isOperational) {
+        return res.status(err.statusCode).render('error', {
+            title: 'Something went wrong!',
+            msg: err.message,
+        });
+    }
+    // Programming or other unknown error: don't leak error details in client
+    console.error('Error 😡', err);
+
+    return res.status(500).json({
+        status: 'Something went wrong',
+        message: 'Please try again later',
+    });
 };
 
 module.exports = (err, req, res, next) => {
@@ -59,9 +80,10 @@ module.exports = (err, req, res, next) => {
     err.status = err.status || 'Server side error occurred';
 
     if (process.env.NODE_ENV === 'development') {
-        sendErrorDev(err, res);
+        sendErrorDev(err, req, res);
     } else if (process.env.NODE_ENV === 'production') {
         let error = { ...err };
+        error.message = err.message;
         if (err.name === 'CastError') error = handleCastErrorDB(error);
         if (err.code === 11000) error = handleDuplicateFieldsDB(err);
         if (err.name === 'ValidationError')
@@ -69,6 +91,6 @@ module.exports = (err, req, res, next) => {
         if (error.name === 'JsonWebTokenError') error = handleJwtError();
         if (error.name === 'TokenExpiredError') error = handleJwtExpireError();
 
-        sendErrorProduction(error, res);
+        sendErrorProduction(error, req, res);
     }
 };
