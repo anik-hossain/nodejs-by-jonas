@@ -128,6 +128,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
     // Grant access to protected route
     req.user = freshUser;
+    res.locals.user = freshUser;
     next();
 });
 
@@ -273,5 +274,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     await user.save();
 
     // 4. log user in, send JWT
-    createSendToken(user, 201, '201 Created', res);
+    createSendToken(user, 201, 201, res);
 });

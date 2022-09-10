@@ -58,7 +58,7 @@ exports.update_profile = catchAsync(async (req, res, next) => {
     );
 
     res.status(200).json({
-        status: '200 ok',
+        status: 200,
         data: updatedUser,
     });
 });
