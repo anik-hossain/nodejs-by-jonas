@@ -18,6 +18,8 @@ const {
     update_profile,
     delete_profile,
     getMe,
+    uploadAvatar,
+    resizeImage,
 } = require('../controllers/userController');
 
 const router = express.Router();
@@ -32,7 +34,7 @@ router.patch('/password-reset/:token', resetPassword);
 // Protect all routes after this middleware
 router.use(protect);
 router.patch('/update-password', updatePassword);
-router.patch('/update-profile', update_profile);
+router.patch('/update-profile', uploadAvatar, resizeImage, update_profile);
 router.delete('/delete-profile', delete_profile);
 router.get('/me', getMe, getUser);
 

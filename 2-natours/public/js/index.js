@@ -10,6 +10,7 @@ const logoutBtn = document.querySelector('.nav__el--logout');
 const updateUserData = document.getElementById('update-user-data');
 const updatePassword = document.getElementById('update-password');
 const savePass = document.querySelector('.btn-pass-save');
+const saveGen = document.querySelector('#save-gen');
 
 // DELEGATION
 if (mapBox) {
@@ -31,11 +32,16 @@ if (logoutBtn) {
 }
 
 if (updateUserData) {
-    updateUserData.addEventListener('submit', (e) => {
+    updateUserData.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        updateSettings({ name, email }, 'data');
+        saveGen.textContent = 'Updating...';
+        const form = new FormData();
+        form.append('name', document.getElementById('name').value);
+        form.append('email', document.getElementById('email').value);
+        form.append('photo', document.getElementById('photo').files[0]);
+
+        await updateSettings(form, 'data');
+        saveGen.textContent = 'Save settings';
     });
 }
 

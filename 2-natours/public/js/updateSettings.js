@@ -13,6 +13,7 @@ export const updateSettings = async (data, type) => {
         });
         if (res.data.status === 200 || res.data.status === 201) {
             showAlert('success', `${type.toUpperCase()} updated successfully`);
+            if (res.data.isUploaded) location.reload(true);
         }
         return res.data.status;
     } catch (error) {

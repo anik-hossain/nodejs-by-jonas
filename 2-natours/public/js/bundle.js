@@ -9090,7 +9090,7 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],"../../node_modules/buffer/index.js":[function(require,module,exports) {
+},{}],"../../node_modules/node-libs-browser/node_modules/buffer/index.js":[function(require,module,exports) {
 
 var global = arguments[3];
 /*!
@@ -10883,7 +10883,7 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":"../../node_modules/base64-js/index.js","ieee754":"../../node_modules/ieee754/index.js","isarray":"../../node_modules/isarray/index.js","buffer":"../../node_modules/buffer/index.js"}],"../../node_modules/axios/lib/helpers/toFormData.js":[function(require,module,exports) {
+},{"base64-js":"../../node_modules/base64-js/index.js","ieee754":"../../node_modules/ieee754/index.js","isarray":"../../node_modules/isarray/index.js","buffer":"../../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../../node_modules/axios/lib/helpers/toFormData.js":[function(require,module,exports) {
 var Buffer = require("buffer").Buffer;
 'use strict';
 
@@ -10958,7 +10958,7 @@ function toFormData(obj, formData) {
 
 module.exports = toFormData;
 
-},{"../utils":"../../node_modules/axios/lib/utils.js","buffer":"../../node_modules/buffer/index.js"}],"../../node_modules/axios/lib/core/settle.js":[function(require,module,exports) {
+},{"../utils":"../../node_modules/axios/lib/utils.js","buffer":"../../node_modules/node-libs-browser/node_modules/buffer/index.js"}],"../../node_modules/axios/lib/core/settle.js":[function(require,module,exports) {
 'use strict';
 
 var AxiosError = require('./AxiosError');
@@ -12780,6 +12780,7 @@ var updateSettings = /*#__PURE__*/function () {
 
             if (res.data.status === 200 || res.data.status === 201) {
               (0, _alerts.showAlert)('success', "".concat(type.toUpperCase(), " updated successfully"));
+              if (res.data.isUploaded) location.reload(true);
             }
 
             return _context.abrupt("return", res.data.status);
@@ -12828,7 +12829,8 @@ var loginForm = document.getElementById('login');
 var logoutBtn = document.querySelector('.nav__el--logout');
 var updateUserData = document.getElementById('update-user-data');
 var updatePassword = document.getElementById('update-password');
-var savePass = document.querySelector('.btn-pass-save'); // DELEGATION
+var savePass = document.querySelector('.btn-pass-save');
+var saveGen = document.querySelector('#save-gen'); // DELEGATION
 
 if (mapBox) {
   var locations = JSON.parse(mapBox.dataset.locations);
@@ -12849,31 +12851,53 @@ if (logoutBtn) {
 }
 
 if (updateUserData) {
-  updateUserData.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var name = document.getElementById('name').value;
-    var email = document.getElementById('email').value;
-    (0, _updateSettings.updateSettings)({
-      name: name,
-      email: email
-    }, 'data');
-  });
+  updateUserData.addEventListener('submit', /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
+      var form;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              e.preventDefault();
+              saveGen.textContent = 'Updating...';
+              form = new FormData();
+              form.append('name', document.getElementById('name').value);
+              form.append('email', document.getElementById('email').value);
+              form.append('photo', document.getElementById('photo').files[0]);
+              _context.next = 8;
+              return (0, _updateSettings.updateSettings)(form, 'data');
+
+            case 8:
+              saveGen.textContent = 'Save settings';
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
 }
 
 if (updatePassword) {
   updatePassword.addEventListener('submit', /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
       var currentPassword, password, passwordConfirm, isSuccess;
-      return _regeneratorRuntime().wrap(function _callee$(_context) {
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context.prev = _context.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               e.preventDefault();
               savePass.textContent = 'Updating...';
               currentPassword = document.getElementById('password-current').value;
               password = document.getElementById('password').value;
               passwordConfirm = document.getElementById('password-confirm').value;
-              _context.next = 7;
+              _context2.next = 7;
               return (0, _updateSettings.updateSettings)({
                 currentPassword: currentPassword,
                 password: password,
@@ -12881,7 +12905,7 @@ if (updatePassword) {
               }, 'password');
 
             case 7:
-              isSuccess = _context.sent;
+              isSuccess = _context2.sent;
               savePass.textContent = 'save password';
 
               if (isSuccess === 201) {
@@ -12892,14 +12916,14 @@ if (updatePassword) {
 
             case 10:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
         }
-      }, _callee);
+      }, _callee2);
     }));
 
-    return function (_x) {
-      return _ref.apply(this, arguments);
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
     };
   }());
 }
@@ -12931,7 +12955,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "4510" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "3502" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
