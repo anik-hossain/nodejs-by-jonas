@@ -13,6 +13,7 @@ const hpp = require('hpp');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const compression = require('compression');
 
 const errorController = require('./controllers/errorController');
 const AppError = require('./utils/AppError');
@@ -85,6 +86,9 @@ app.use(
         ],
     })
 );
+
+// Compress Response
+app.use(compression());
 
 // Routing
 app.use('/', viewRouter);
